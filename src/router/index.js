@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import { createRouter, createWebHistory } from "vue-router"
+import Home from "../views/Home.vue"
 
 const routes = [
   {
@@ -16,6 +16,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+<<<<<<< HEAD
   {
     path: "/login",
     name: "Login",
@@ -23,10 +24,13 @@ const routes = [
       import(/* webpackChunkName: "login" */ "../views/Login.vue"),
   },
 ];
+=======
+]
+>>>>>>> origin/master
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+})
 
-export default router;
+export default router

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="authInitialized">
+        <p v-if="message">{{message}}</p>
+        <p v-if="!user">
+          ログイン<br />
+          Email: <input v-model="loginEmail" /><br />
+          Password: <input v-model="loginPassword" type="password" /><br />
+          <input
+            value="ログイン"
+            type="submit"
+            @click.prevent="submitLogin"
+          /><br />
+        </p>
+        <p v-if="!user">
+          ユーザ登録<br />
+          Email: <input v-model="registerEmail" /><br />
+          Password: <input v-model="registerPassword" type="password" /><br />
+          <input
+            value="登録"
+            type="submit"
+            @click.prevent="submitRegister"
+          /><br />
+        </p>
+        <div v-if="user">
+          <p>ログイン中: {{email}}</p>
+          <p v-if="emailVerified">メールアドレス確認済</p>
+          <p v-else-if="verificationSent">
+            確認メール送信済み
+            <input
+              value="再送信"
+              type="submit"
+              @click.prevent="sendEmailVerification"
+            />
+          </p>
+          <p v-else>
+            メールアドレス未確認
+            <input
+              value="確認メール送信"
+              type="submit"
+              @click.prevent="sendEmailVerification"
+            />
+          </p>
+        </div>
+        <p v-if="user">
+          ログアウト<br />
+          <input
+            value="ログアウト"
+            type="submit"
+            @click.prevent="submitLogout"
+          /><br />
+        </p>
+      </div>
+    </div>
+    <script>
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyBAh4p6_lpCVwIyZvrZWkKv7d_P2AE0UZM",
+        authDomain: "team-original-app-447ab.firebaseapp.com",
+        projectId: "team-original-app-447ab",
+        storageBucket: "team-original-app-447ab.appspot.com",
+        messagingSenderId: "706868844760",
+        appId: "1:706868844760:web:2e815f87fb9af192765fad",
+        measurementId: "G-XT33NCW4G4",
+      }
+      firebase.initializeApp(firebaseConfig)
+      const app = new Vue({
+        el: "#app",
+        data: {
+          authInitialized: false,
+          user: null,
+          message: "",
+          registerEmail: "",
+          registerPassword: "",
+          loginEmail: "",
+          loginPassword: "",
+          verificationSent: false,
+        },
+        computed: {
+          email() {
+            if (this.user) {
+              return this.user.email
+            } else {
+              return ""
+            }
+          },
+          emailVerified() {
+            if (this.user) {
+              return this.user.emailVerified
+            } else {
+              return false
+            }
+          },
+        },
+        methods: {
+          async submitRegister() {
+            try {
+              await firebase
+                .auth()
+                .createUserWithEmailAndPassword(
+                  this.registerEmail,
+                  this.registerPassword
+                )
+            } catch (e) {
+              console.log(e)
+              if (e.message) {
+                this.message = e.message
+              }
+            }
+          },
+          async sendEmailVerification() {
+            try {
+              await firebase.auth().currentUser.sendEmailVerification()
+              this.verificationSent = true
+            } catch (e) {
+              console.log(e)
+              if (e.message) {
+                this.message = e.message
+              }
+            }
+          },
+          async submitLogin() {
+            try {
+              await firebase
+                .auth()
+                .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+              await firebase
+                .auth()
+                .signInWithEmailAndPassword(this.loginEmail, this.loginPassword)
+            } catch (e) {
+              console.log(e)
+              if (e.message) {
+                this.message = e.message
+              }
+            }
+          },
+          async submitLogout() {
+            try {
+              await firebase.auth().signOut()
+            } catch (e) {
+              console.log(e)
+              if (e.message) {
+                this.message = e.message
+              }
+            }
+          },
+        },
+        created() {
+          firebase.auth().onAuthStateChanged((user) => {
+            // ユーザ登録やログイン、ログアウトをすることここが呼び出される。
+            // ページをロードした直後もここが呼び出される。
+
+            // ログイン中であっても、ページがいったん表示されてからここが呼び出されるようで、
+            // 表示上は一瞬は未ログインの状態になってしまう。
+            // 未ログインであれば user=null でここが呼び出される。
+            this.user = user
+
+            this.authInitialized = true // 一瞬未ログイン状態で表示されてしまうのを防ぐためのフラグ
+          })
+        },
+      })
+    </script>
+  </body>
+</html>
