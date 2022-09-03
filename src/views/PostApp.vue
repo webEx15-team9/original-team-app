@@ -1,61 +1,3 @@
-<!-- <template>
-  <div class="home__wrapper">
-    <div class="form__wrapper">
-      <textarea
-        class="form__textarea"
-        v-model="text"
-        placeholder="入力してください"
-      />
-      <div><h6>画像を選んでください</h6></div>
-      <div class="form__buttons">
-        <button v-on:click="PostTweet" class="form__submit-button">投稿</button>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      text: "",
-    }
-  },
-  methods: {
-    PostTweet() {
-      alert("投稿機能の完成をお楽しみに！")
-    },
-  },
-}
-</script>
-
-<style scoped>
-.home__wrapper {
-  margin: 0 auto;
-  max-width: 500px;
-  background-color: #ccc;
-}
-.form__wrapper {
-  padding: 2rem;
-}
-.form__textarea {
-  width: 100%;
-  height: calc(1.3rem * 3 + 0.5rem * 2);
-  padding: 0.5rem;
-  line-height: 1.3rem;
-  border-radius: 5px;
-  border: none;
-  resize: none;
-}
-.form__textarea:focus {
-  outline: none;
-}
-.form__buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-</style> -->
-
 <template>
   <div class="app">
     <h2>投稿ページ</h2>
@@ -103,7 +45,7 @@ export default {
 
 <script>
 /* 変更点１ */
-import { collection, addDoc } from "firebase/firestore"
+import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db } from "/firebase"
 
 export default {
@@ -134,6 +76,16 @@ export default {
         }
       })
     },
+  },
+  created() {
+    getDocs(collection(db, "tweets")).then((snapshot) => {
+      snapshot.forEach((doc) => {
+        this.tweets.push({
+          id: doc.id,
+          ...doc.data(),
+        })
+      })
+    })
   },
 }
 </script>
