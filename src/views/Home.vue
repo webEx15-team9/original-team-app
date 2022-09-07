@@ -6,6 +6,7 @@
       <router-link to="/search" class="nav_link_function">検索機能</router-link>
       <router-link to="/post" class="nav_link_function">投稿機能</router-link>
     </div>
+    <div>ここに画像を入れる</div>
   </div>
 </template>
 
