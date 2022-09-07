@@ -4,6 +4,7 @@ import Login from "@/views/Login.vue"
 import Register from "@/views/Register.vue"
 import Search from "@/views/SearchApp.vue"
 import Post from "@/views/PostApp.vue"
+import Slide from "@/views/SlideApp.vue"
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: "/post",
     name: "Post",
     component: Post,
+  },
+  {
+    path: "/slide",
+    name: "Slide",
+    component: Slide,
   },
 ]
 

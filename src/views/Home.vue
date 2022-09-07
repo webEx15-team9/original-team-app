@@ -6,9 +6,18 @@
       <router-link to="/search" class="nav_link_function">検索機能</router-link>
       <router-link to="/post" class="nav_link_function">投稿機能</router-link>
     </div>
-    <div>ここに画像を入れる</div>
+    <Slide></Slide>
   </div>
 </template>
+
+<script>
+import Slide from "@/views/SlideApp.vue"
+export default {
+  components: {
+    Slide,
+  },
+}
+</script>
 
 <style>
 .nav_link_about {
@@ -29,5 +38,14 @@
   margin: 20px;
   font-size: 20px;
   text-decoration: none;
+}
+
+.image {
+  display: inline-block;
+  height: 300px;
+  margin-right: 15px;
+}
+.image img {
+  height: 100%;
 }
 </style>
