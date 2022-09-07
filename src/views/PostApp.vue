@@ -7,7 +7,7 @@
         <input v-model="name" placeholder="名前" />
       </div>
       <div class="form__wrapper">
-        <p>，地方名</p>
+        <p>２，地方名</p>
         <select name="sample" v-model="region">
           <option value="">選択してください</option>
           <option value="北海道">北海道</option>
@@ -22,7 +22,7 @@
       </div>
       <br />
       <div class="form__wrapper">
-        <p>，都道府県名</p>
+        <p>３，都道府県名</p>
         <select v-model="prefecture">
           <option value="" selected>選択してください</option>
           <option value="北海道">北海道</option>
@@ -75,7 +75,7 @@
         </select>
       </div>
       <div class="form__wrapper">
-        <p>２，交通手段</p>
+        <p>４，交通手段</p>
         <select v-model="transport">
           <option selected>選択してください</option>
           <option>徒歩</option>
@@ -86,7 +86,7 @@
         </select>
       </div>
       <div class="form__wrapper">
-        <p>２，世界遺産に登録されていますか？</p>
+        <p>５，世界遺産に登録されていますか？</p>
         <select v-model="worldHeritage">
           <option selected>選択してください</option>
           <option>はい</option>
@@ -94,7 +94,7 @@
         </select>
       </div>
       <div class="form__wrapper">
-        <p>２，季節</p>
+        <p>６，季節</p>
         <select v-model="season">
           <option selected>選択してください</option>
           <option>1月</option>
@@ -112,11 +112,11 @@
         </select>
       </div>
       <div class="form__wrapper">
-        <p>２，撮影日時</p>
+        <p>７，撮影日時</p>
         <input type="date" v-model="date" placeholder="none" />
       </div>
       <div class="form__wrapper">
-        <p>２，予算</p>
+        <p>８，予算</p>
         <select v-model="budget">
           <option selected>選択してください</option>
           <option>5000円未満</option>
@@ -127,7 +127,7 @@
         </select>
       </div>
       <div class="form__wrapper">
-        <p>２，滞在期間</p>
+        <p>９，滞在期間</p>
         <select v-model="stay">
           <option selected>選択してください</option>
           <option>日帰り</option>
@@ -138,7 +138,7 @@
         </select>
       </div>
       <div class="form__wrapper">
-        <p>３，感想</p>
+        <p>１０，感想</p>
         <textarea
           class="form__textarea"
           v-model="textPost"
@@ -146,7 +146,7 @@
         ></textarea>
       </div>
       <div class="form__wrapper">
-        <p>４、写真</p>
+        <p>１１，写真</p>
       </div>
       <br />
       <br />
