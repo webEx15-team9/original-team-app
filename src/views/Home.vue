@@ -6,8 +6,18 @@
       <router-link to="/search" class="nav_link_function">検索機能</router-link>
       <router-link to="/post" class="nav_link_function">投稿機能</router-link>
     </div>
+    <Slide></Slide>
   </div>
 </template>
+
+<script>
+import Slide from "@/views/SlideApp.vue"
+export default {
+  components: {
+    Slide,
+  },
+}
+</script>
 
 <style>
 .nav_link_about {
