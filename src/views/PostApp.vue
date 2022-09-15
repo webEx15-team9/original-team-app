@@ -187,6 +187,7 @@
           <div class="second-info">感想：<br />{{ tweet.text3 }}</div>
         </div>
       </div>
+      <button v-on:click="deletePost(tweet)">↑削除</button>
     </div>
   </div>
 </template>
@@ -194,7 +195,7 @@
 <script>
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db } from "/firebase"
-
+// import { deletePost } from "./views/PostApp.vue"
 export default {
   data() {
     return {
@@ -234,7 +235,16 @@ export default {
         }
       })
     },
+    deletePost() {
+      {
+        alert("本当に削除してもよろしいですか？")
+      }
+      // deleteDoc(doc(db, "tweets")).then((id) => {
+      this.tweets.splice(0, 1)
+      // })
+    },
   },
+
   created() {
     getDocs(collection(db, "tweets")).then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -245,6 +255,9 @@ export default {
       })
     })
   },
+
+  //   })
+  // },
 }
 </script>
 
