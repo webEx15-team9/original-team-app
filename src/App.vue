@@ -20,13 +20,16 @@ export default {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+}
 #app {
   text-align: center;
   overflow: hidden;
 }
 .body {
-  padding: 20px;
-  background-color: rgb(213, 250, 196);
+  background-color: white;
 }
 .nav_link_about {
   font-size: 50px;
