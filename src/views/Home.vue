@@ -1,42 +1,26 @@
 <template>
   <div class="home">
-    <router-link to="/about" class="nav_link_about">About</router-link>
-    <div class="content">いろんな機能↓↓</div>
-    <div class="function_details">
-      <router-link to="/search" class="nav_link_function">検索機能</router-link>
-      <router-link to="/post" class="nav_link_function">投稿機能</router-link>
+    <div class="intro">タイトルへようこそ！</div>
+    <div>
+      <router-link to="/login" class="nav_link">Login</router-link>
     </div>
-    <Slide></Slide>
+    <div>
+      <router-link to="/about" class="nav_link_about">About</router-link>
+    </div>
   </div>
 </template>
 
-<script>
-import Slide from "@/views/SlideApp.vue"
-export default {
-  components: {
-    Slide,
-  },
-}
-</script>
-
 <style>
+.home {
+  min-height: 100vh;
+  background-color: rgb(186, 242, 250);
+}
+
+.intro {
+  font-size: 50px;
+}
+
 .nav_link_about {
-  text-decoration: none;
-}
-
-.content {
-  font-size: 30px;
-  padding-top: 20px;
-}
-
-.function_details {
-  padding: 10px;
-}
-
-.nav_link_function {
-  text-align: center;
-  margin: 20px;
-  font-size: 20px;
   text-decoration: none;
 }
 </style>
