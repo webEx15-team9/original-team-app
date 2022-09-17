@@ -201,6 +201,12 @@
 <script>
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db } from "/firebase"
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage"
 // import { deletePost } from "./views/PostApp.vue"
 export default {
   data() {
@@ -222,6 +228,35 @@ export default {
   },
   methods: {
     postTweet() {
+      const file = this.$refs.preview.files[0]
+      const storage = getStorage()
+      const storageRef = ref(storage, file.name)
+
+      const uploadTask = uploadBytesResumable(storageRef, file)
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log("Upload is " + progress + "% done")
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused")
+              break
+            case "running":
+              console.log("Upload is running")
+              break
+          }
+        },
+
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL)
+          })
+        }
+      )
+
       const tweet = {
         text: this.name,
         textDate: this.date,
@@ -248,9 +283,7 @@ export default {
       {
         alert("本当に削除してもよろしいですか？")
       }
-      // deleteDoc(doc(db, "tweets")).then((id) => {
       this.tweets.splice(0, 1)
-      // })
     },
     uploadFile() {
       const file = this.$refs.preview.files[0]
@@ -268,9 +301,6 @@ export default {
       })
     })
   },
-
-  //   })
-  // },
 }
 </script>
 
