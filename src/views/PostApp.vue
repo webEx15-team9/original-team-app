@@ -147,6 +147,12 @@
       </div>
       <div class="form__wrapper">
         <p>１１，写真</p>
+        <div>
+          <input type="file" ref="preview" @change="uploadFile" />
+        </div>
+        <div v-if="url">
+          <img :src="url" />
+        </div>
       </div>
       <br />
       <br />
@@ -209,6 +215,7 @@ export default {
       season: null,
       budget: null,
       stay: null,
+      url: "",
 
       tweets: [],
     }
@@ -244,6 +251,10 @@ export default {
       // deleteDoc(doc(db, "tweets")).then((id) => {
       this.tweets.splice(0, 1)
       // })
+    },
+    uploadFile() {
+      const file = this.$refs.preview.files[0]
+      this.url = URL.createObjectURL(file)
     },
   },
 
