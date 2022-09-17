@@ -165,26 +165,26 @@
         <br />
         <div class="first-block">
           <div class="info">名前：{{ tweet.text }}<br /></div>
-          <div class="info">撮影日時：{{ tweet.text2 }}</div>
+          <div class="info">撮影日時：{{ tweet.textDate }}</div>
 
-          <div class="info">地方名：{{ tweet.select }}</div>
+          <div class="info">地方名：{{ tweet.selectRegion }}</div>
 
-          <div class="info">都道府県名：{{ tweet.select2 }}</div>
+          <div class="info">都道府県名：{{ tweet.selectPrefecture }}</div>
 
-          <div class="info">交通手段：{{ tweet.select3 }}</div>
+          <div class="info">交通手段：{{ tweet.selectTransport }}</div>
 
           <div class="info">
-            世界遺産に登録されていますか？：{{ tweet.select4 }}
+            世界遺産に登録されていますか？：{{ tweet.selectWorldHeritage }}
           </div>
 
-          <div class="info">季節：{{ tweet.select5 }}</div>
-
-          <div class="info">滞在期間：{{ tweet.select6 }}</div>
+          <div class="info">季節：{{ tweet.selectSeason }}</div>
+          <div class="info">予算：{{ tweet.selectBudget }}</div>
+          <div class="info">滞在期間：{{ tweet.selectStay }}</div>
         </div>
         <div class="second-block">
           <div class="second-info">写真↓</div>
           <br />
-          <div class="second-info">感想：<br />{{ tweet.text3 }}</div>
+          <div class="second-info">感想：<br />{{ tweet.textPost }}</div>
         </div>
       </div>
       <button v-on:click="deletePost(tweet)">↑削除</button>
@@ -207,6 +207,7 @@ export default {
       transport: null,
       worldHeritage: null,
       season: null,
+      budget: null,
       stay: null,
 
       tweets: [],
@@ -216,14 +217,15 @@ export default {
     postTweet() {
       const tweet = {
         text: this.name,
-        text2: this.date,
-        text3: this.textPost,
-        select: this.region,
-        select2: this.prefecture,
-        select3: this.transport,
-        select4: this.worldHeritage,
-        select5: this.season,
-        select6: this.stay,
+        textDate: this.date,
+        textPost: this.textPost,
+        selectRegion: this.region,
+        selectPrefecture: this.prefecture,
+        selectTransport: this.transport,
+        selectWorldHeritage: this.worldHeritage,
+        selectBudget: this.budget,
+        selectSeason: this.season,
+        selectStay: this.stay,
       }
       addDoc(collection(db, "tweets"), tweet).then((ref) => {
         this.tweets.push({
