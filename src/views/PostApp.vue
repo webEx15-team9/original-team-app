@@ -214,13 +214,13 @@ export default {
       textPost: "",
       date: "",
       name: "",
-      region: null,
-      prefecture: null,
-      transport: null,
-      worldHeritage: null,
-      season: null,
-      budget: null,
-      stay: null,
+      region: "",
+      prefecture: "",
+      transport: "",
+      worldHeritage: "",
+      season: "",
+      budget: "",
+      stay: "",
       url: "",
 
       tweets: [],
@@ -234,9 +234,15 @@ export default {
 
       const uploadTask = uploadBytesResumable(storageRef, file)
 
+      // Register three observers:
+      // 1. 'state_changed' observer, called any time the state changes
+      // 2. Error observer, called on failure
+      // 3. Completion observer, called on successful completion
       uploadTask.on(
         "state_changed",
         (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           console.log("Upload is " + progress + "% done")
@@ -253,31 +259,30 @@ export default {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL)
+            const tweet = {
+              text: this.name,
+              textDate: this.date,
+              textPost: this.textPost,
+              selectRegion: this.region,
+              selectPrefecture: this.prefecture,
+              selectTransport: this.transport,
+              selectWorldHeritage: this.worldHeritage,
+              selectBudget: this.budget,
+              selectSeason: this.season,
+              selectStay: this.stay,
+            }
+            addDoc(collection(db, "tweets"), tweet).then((ref) => {
+              this.tweets.push({
+                id: ref.id,
+                ...tweet,
+              })
+              {
+                alert("投稿してくれてありがとう！！！")
+              }
+            })
           })
         }
       )
-
-      const tweet = {
-        text: this.name,
-        textDate: this.date,
-        textPost: this.textPost,
-        selectRegion: this.region,
-        selectPrefecture: this.prefecture,
-        selectTransport: this.transport,
-        selectWorldHeritage: this.worldHeritage,
-        selectBudget: this.budget,
-        selectSeason: this.season,
-        selectStay: this.stay,
-      }
-      addDoc(collection(db, "tweets"), tweet).then((ref) => {
-        this.tweets.push({
-          id: ref.id,
-          ...tweet,
-        })
-        {
-          alert("投稿してくれてありがとう！！！")
-        }
-      })
     },
     deletePost() {
       {
@@ -301,6 +306,8 @@ export default {
       })
     })
   },
+
+  //   })
 }
 </script>
 
