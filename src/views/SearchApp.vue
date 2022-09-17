@@ -74,6 +74,7 @@
       </div>
       <div class="second-block">
         <div class="second-info">写真↓</div>
+        <img v-bind:src="search.selectUrl" />
         <br />
         <div class="second-info">感想：<br />{{ search.textPost }}</div>
       </div>
