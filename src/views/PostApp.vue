@@ -146,12 +146,11 @@
         ></textarea>
       </div>
       <div class="form__wrapper">
-        <p>１１，写真</p>
-        <div>
-          <input type="file" ref="preview" @change="uploadFile" />
-        </div>
+        <p>１１，写真（必須）</p>
+
+        <input type="file" ref="preview" @change="uploadFile" />
         <div v-if="url">
-          <img :src="url" />
+          <img :src="url" class="picture" />
         </div>
       </div>
       <br />
@@ -222,12 +221,12 @@ export default {
       budget: "",
       stay: "",
       url: "",
-
       tweets: [],
     }
   },
   methods: {
     postTweet() {
+      this.$router.push("/search")
       const file = this.$refs.preview.files[0]
       const storage = getStorage()
       const storageRef = ref(storage, file.name)
@@ -414,5 +413,9 @@ export default {
   padding: 20px;
   text-align: right;
   justify-content: right;
+}
+.picture {
+  height: 300px;
+  width: 300px;
 }
 </style>
