@@ -147,7 +147,12 @@
         ></textarea>
       </div>
       <div class="form__wrapper">
-        <p>１１，写真</p>
+        <p>１１，写真（必須）</p>
+
+        <input type="file" ref="preview" @change="uploadFile" />
+        <div v-if="url">
+          <img :src="url" class="picture" />
+        </div>
       </div>
       <br />
       <br />
@@ -166,28 +171,29 @@
         <br />
         <div class="first-block">
           <div class="info">名前：{{ tweet.text }}<br /></div>
-          <div class="info">撮影日時：{{ tweet.text2 }}</div>
+          <div class="info">撮影日時：{{ tweet.textDate }}</div>
 
-          <div class="info">地方名：{{ tweet.select }}</div>
+          <div class="info">地方名：{{ tweet.selectRegion }}</div>
 
-          <div class="info">都道府県名：{{ tweet.select2 }}</div>
+          <div class="info">都道府県名：{{ tweet.selectPrefecture }}</div>
 
-          <div class="info">交通手段：{{ tweet.select3 }}</div>
+          <div class="info">交通手段：{{ tweet.selectTransport }}</div>
 
           <div class="info">
-            世界遺産に登録されていますか？：{{ tweet.select4 }}
+            世界遺産に登録されていますか？：{{ tweet.selectWorldHeritage }}
           </div>
 
-          <div class="info">季節：{{ tweet.select5 }}</div>
-
-          <div class="info">滞在期間：{{ tweet.select6 }}</div>
+          <div class="info">季節：{{ tweet.selectSeason }}</div>
+          <div class="info">予算：{{ tweet.selectBudget }}</div>
+          <div class="info">滞在期間：{{ tweet.selectStay }}</div>
         </div>
         <div class="second-block">
           <div class="second-info">写真↓</div>
           <br />
-          <div class="second-info">感想：<br />{{ tweet.text3 }}</div>
+          <div class="second-info">感想：<br />{{ tweet.textPost }}</div>
         </div>
       </div>
+      <button v-on:click="deletePost(tweet)">↑削除</button>
     </div>
   </div>
   <Footer></Footer>
@@ -198,7 +204,13 @@ import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
 import { collection, addDoc, getDocs } from "firebase/firestore"
 import { db } from "/firebase"
-
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage"
+// import { deletePost } from "./views/PostApp.vue"
 export default {
   components: {
     Header,
@@ -209,40 +221,86 @@ export default {
       textPost: "",
       date: "",
       name: "",
-      region: null,
-      prefecture: null,
-      transport: null,
-      worldHeritage: null,
-      season: null,
-      stay: null,
-
+      region: "",
+      prefecture: "",
+      transport: "",
+      worldHeritage: "",
+      season: "",
+      budget: "",
+      stay: "",
+      url: "",
       tweets: [],
     }
   },
   methods: {
     postTweet() {
-      const tweet = {
-        text: this.name,
-        text2: this.date,
-        text3: this.textPost,
-        select: this.region,
-        select2: this.prefecture,
-        select3: this.transport,
-        select4: this.worldHeritage,
-        select5: this.season,
-        select6: this.stay,
-      }
-      addDoc(collection(db, "tweets"), tweet).then((ref) => {
-        this.tweets.push({
-          id: ref.id,
-          ...tweet,
-        })
-        {
-          alert("投稿してくれてありがとう！！！")
+      this.$router.push("/search")
+      const file = this.$refs.preview.files[0]
+      const storage = getStorage()
+      const storageRef = ref(storage, file.name)
+
+      const uploadTask = uploadBytesResumable(storageRef, file)
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log("Upload is " + progress + "% done")
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused")
+              break
+            case "running":
+              console.log("Upload is running")
+              break
+          }
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          console.log(error)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL)
+            const tweet = {
+              text: this.name,
+              textDate: this.date,
+              textPost: this.textPost,
+              selectRegion: this.region,
+              selectPrefecture: this.prefecture,
+              selectTransport: this.transport,
+              selectWorldHeritage: this.worldHeritage,
+              selectBudget: this.budget,
+              selectSeason: this.season,
+              selectStay: this.stay,
+              selectUrl: downloadURL,
+            }
+            addDoc(collection(db, "tweets"), tweet).then((ref) => {
+              this.tweets.push({
+                id: ref.id,
+                ...tweet,
+              })
+              {
+                alert("投稿してくれてありがとう！！！")
+              }
+            })
+          })
         }
-      })
+      )
+    },
+    deletePost() {
+      {
+        alert("本当に削除してもよろしいですか？")
+      }
+      this.tweets.splice(0, 1)
+    },
+    uploadFile() {
+      const file = this.$refs.preview.files[0]
+      this.url = URL.createObjectURL(file)
     },
   },
+
   created() {
     getDocs(collection(db, "tweets")).then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -253,6 +311,8 @@ export default {
       })
     })
   },
+
+  //   })
 }
 </script>
 
@@ -361,5 +421,9 @@ export default {
   padding: 20px;
   text-align: right;
   justify-content: right;
+}
+.picture {
+  height: 300px;
+  width: 300px;
 }
 </style>
