@@ -1,4 +1,5 @@
 <template>
+  <Header></Header>
   <div class="fixed-background background-1">
     <div class="question">
       こんな悩みを持ったことはありますか？
@@ -61,12 +62,17 @@
       </div>
     </div>
   </div>
+  <Footer></Footer>
 </template>
 
 <script>
+import Header from "@/components/Header.vue"
+import Footer from "@/components/Footer.vue"
 import Slide from "@/views/SlideApp.vue"
 export default {
   components: {
+    Header,
+    Footer,
     Slide,
   },
 }

@@ -1,30 +1,10 @@
 <template>
   <div class="app">
-    <div v-show="isDisplay">
-      <Header></Header>
-    </div>
     <div class="body">
       <router-view></router-view>
     </div>
-    <Footer></Footer>
   </div>
 </template>
-
-<script>
-import Header from "@/components/Header.vue"
-import Footer from "@/components/Footer.vue"
-export default {
-  components: {
-    Header,
-    Footer,
-  },
-  data() {
-    return {
-      isDisplay: true,
-    }
-  },
-}
-</script>
 
 <style>
 * {
