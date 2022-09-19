@@ -1,6 +1,5 @@
 <template>
   <Header></Header>
-  <div>検索ページ</div>
   <div class="search_home__wrapper">
     <div class="search_form__wrapper">
       <p>１．地方名</p>
@@ -152,7 +151,9 @@ export default {
 
 <style>
 .search_home__wrapper {
-  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
   max-width: 1200px;
   background-color: rgb(245, 249, 249);
   display: flex;
@@ -174,7 +175,8 @@ export default {
   text-align: center;
   width: 1100px;
   height: 380px;
-  margin-left: 180px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 30px;
   background-color: rgb(169, 233, 163);
   list-style: none;

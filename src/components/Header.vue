@@ -4,9 +4,9 @@
       <img src="../assets/ロゴ.png" class="header_logo" />
     </router-link>
     <div class="nav">
-      <router-link to="/post" class="nav_link">POST</router-link>
-      <div class="border">|</div>
       <router-link to="/search" class="nav_link">SEARCH</router-link>
+      <div class="border">|</div>
+      <router-link to="/post" class="nav_link">POST</router-link>
       <div class="border">|</div>
       <router-link to="/" class="nav_link">LOGOUT</router-link>
     </div>
@@ -37,11 +37,11 @@
   display: flex;
   padding-right: 15px;
   font-size: 20px;
-  color: black;
 }
 .nav_link {
   margin: 0px 30px;
   text-decoration: none;
+  color: black;
 }
 
 .nav_link:hover {

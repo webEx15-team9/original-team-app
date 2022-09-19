@@ -1,7 +1,6 @@
 <template>
   <Header></Header>
   <div class="app">
-    <h2>投稿ページ</h2>
     <div class="home__wrapper">
       <div class="form__wrapper">
         <p>１，場所の名前</p>
@@ -238,9 +237,7 @@ export default {
       const file = this.$refs.preview.files[0]
       const storage = getStorage()
       const storageRef = ref(storage, file.name)
-
       const uploadTask = uploadBytesResumable(storageRef, file)
-
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -300,7 +297,6 @@ export default {
       this.url = URL.createObjectURL(file)
     },
   },
-
   created() {
     getDocs(collection(db, "tweets")).then((snapshot) => {
       snapshot.forEach((doc) => {
@@ -311,7 +307,6 @@ export default {
       })
     })
   },
-
   //   })
 }
 </script>
@@ -329,19 +324,19 @@ export default {
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
 <style scoped>
 .home__wrapper {
-  margin: 0 auto;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1200px;
   background-color: rgb(245, 249, 249);
   display: flex;
@@ -380,18 +375,19 @@ export default {
 .bl_flexContainer {
   justify-content: center;
   text-align: center;
+  margin-bottom: 50px;
 }
 .el_flexItem {
   /* padding: 2rem; */
   display: flex;
   justify-content: flex-start;
   position: relative;
-  margin: 100px;
   text-align: center;
   width: 1100px;
   height: 380px;
-  margin-left: 180px;
-  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
   background-color: rgb(169, 233, 163);
   list-style: none;
   border-radius: 2%;
