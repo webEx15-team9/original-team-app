@@ -1,6 +1,8 @@
 <template>
   <div class="app">
-    <Header></Header>
+    <div v-show="isDisplay">
+      <Header></Header>
+    </div>
     <div class="body">
       <router-view></router-view>
     </div>
@@ -16,6 +18,11 @@ export default {
     Header,
     Footer,
   },
+  data() {
+    return {
+      isDisplay: true,
+    }
+  },
 }
 </script>
 
@@ -24,7 +31,12 @@ export default {
   margin: 0;
   padding: 0;
 }
-#app {
+
+Header {
+  display: none;
+}
+
+.app {
   text-align: center;
   overflow: hidden;
 }

@@ -1,9 +1,8 @@
 <template>
   <header class="header">
-    <router-link to="/" class="header_title">タイトル</router-link>
+    <router-link to="/about" class="header_title">タイトル</router-link>
     <div class="nav">
-      <router-link to="/login" class="nav_link">Login</router-link>
-      <router-link to="/register" class="nav_link">Register</router-link>
+      <router-link to="/" class="nav_link">LogOut</router-link>
     </div>
   </header>
 </template>
@@ -16,6 +15,7 @@
   align-items: center;
   padding: 10px;
 }
+
 .header_title {
   font-size: 50px;
   padding-left: 15px;
