@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <div class="intro">タイトルへようこそ！</div>
+    <div class="intro">日本絶景ダイアリーへようこそ！</div>
+    <img src="../assets/ロゴ.png" style="margin-bottom: 50px" />
     <div>
       <button v-on:click="login" class="googlelogin">
         Googleアカウントでログイン
@@ -44,10 +45,11 @@ export default {
 
 .intro {
   font-size: 50px;
-  padding: 50px;
+  padding: 30px;
 }
 
 .googlelogin {
+  padding-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
