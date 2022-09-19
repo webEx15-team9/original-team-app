@@ -69,11 +69,24 @@
 import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
 import Slide from "@/views/SlideApp.vue"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 export default {
   components: {
     Header,
     Footer,
     Slide,
+  },
+  created() {
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user)
+      } else {
+        console.log("notuser")
+        window.alert("ログインしてください")
+        this.$router.push("/")
+      }
+    })
   },
 }
 </script>

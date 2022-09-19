@@ -7,6 +7,9 @@
 </template>
 
 <style>
+#drawer-navigation {
+  display: none;
+}
 * {
   margin: 0;
   padding: 0;

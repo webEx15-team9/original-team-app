@@ -165,6 +165,7 @@
   </div>
 
   <div class="bl_flexContainer">
+    <div class="post_view">みんなの投稿を見てみよう！</div>
     <div v-for="tweet in tweets" :key="tweet.id">
       <div class="el_flexItem">
         <br />
@@ -209,6 +210,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 // import { deletePost } from "./views/PostApp.vue"
 export default {
   components: {
@@ -298,14 +300,24 @@ export default {
     },
   },
   created() {
-    getDocs(collection(db, "tweets")).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        this.tweets.push({
-          id: doc.id,
-          ...doc.data(),
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user)
+      } else {
+        console.log("notuser")
+        window.alert("ログインしてください")
+        this.$router.push("/")
+      }
+    }),
+      getDocs(collection(db, "tweets")).then((snapshot) => {
+        snapshot.forEach((doc) => {
+          this.tweets.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
       })
-    })
   },
   //   })
 }
@@ -376,6 +388,12 @@ export default {
   justify-content: center;
   text-align: center;
   margin-bottom: 50px;
+}
+
+.post_view {
+  margin-top: 100px;
+  font-size: 50px;
+  font-weight: 500;
 }
 .el_flexItem {
   /* padding: 2rem; */

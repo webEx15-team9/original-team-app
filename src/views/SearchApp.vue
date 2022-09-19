@@ -88,6 +88,7 @@ import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
 import { getDocs, collection } from "firebase/firestore"
 import { db } from "/firebase"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 
 export default {
   components: {
@@ -137,14 +138,24 @@ export default {
   },
 
   created() {
-    getDocs(collection(db, "tweets")).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        this.forSearch.push({
-          id: doc.id,
-          ...doc.data(),
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user)
+      } else {
+        console.log("notuser")
+        window.alert("ログインしてください")
+        this.$router.push("/")
+      }
+    }),
+      getDocs(collection(db, "tweets")).then((snapshot) => {
+        snapshot.forEach((doc) => {
+          this.forSearch.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
       })
-    })
   },
 }
 </script>
