@@ -30,7 +30,7 @@
     <div class="about-detail">
       <div>このサイトでは、日本各地の絶景写真を紹介しています！</div>
       <div>
-        さらに実際に行った人の感想やかかった費用も見られるので、お出かけするときの参考にしてみてください！
+        さらに実際に行った人の感想やかかった費用も見られるので、<br />お出かけするときの参考にしてみてください！
       </div>
       <div class="slideshow-zekkei">
         <Slide></Slide>
@@ -107,12 +107,13 @@ export default {
 }
 
 .question {
-  font-size: 50px;
+  font-size: 3vw;
+  margin-top: 10vh;
 }
 
 .question-cat-image {
-  width: 400px;
-  margin-top: 250px;
+  width: 30vw;
+  margin-top: 30vh;
   justify-content: center;
 }
 
@@ -122,8 +123,8 @@ export default {
 
 .question-detail {
   color: white;
-  font-size: 30px;
-  padding: 50px;
+  font-size: 2vw;
+  padding: 20vh 10vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -174,7 +175,7 @@ export default {
 }
 
 .about-con {
-  font-size: 50px;
+  font-size: 3vw;
   border-bottom: dashed 2px #87cefa;
 }
 
@@ -184,7 +185,7 @@ export default {
 
 .about-detail {
   color: white;
-  font-size: 30px;
+  font-size: 2vw;
   padding: 40px;
 }
 
@@ -203,9 +204,11 @@ export default {
 }
 
 .function {
-  margin: 300px;
+  margin-top: 40vh;
+  margin-right: auto;
+  margin-left: auto;
   align-items: center;
-  font-size: 50px;
+  font-size: 3vw;
 }
 
 .function-detail {
@@ -221,9 +224,9 @@ export default {
   position: relative;
   margin: 0 auto;
   padding: 10px 20px;
-  width: 200px;
+  width: 15vw;
   color: #333;
-  font-size: 40px;
+  font-size: 3vw;
   font-weight: 700;
   background-color: #ccc;
   border-radius: 50vh;
@@ -258,13 +261,13 @@ export default {
 }
 
 .function-detail_search-ex {
-  font-size: 20px;
+  font-size: 1vw;
   margin-top: 8px;
   font-weight: bold;
 }
 
 .function-detail_post-ex {
-  font-size: 20px;
+  font-size: 1vw;
   margin-top: 8px;
   font-weight: bold;
 }

@@ -39,12 +39,12 @@ export default {
 <style>
 .slideImage {
   display: inline-block;
-  height: 400px;
+  height: 50vh;
 }
 .slideshow {
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  min-width: 80%;
 }
 .slideImage__prev--in-active,
 .slideImage__next--in-active {

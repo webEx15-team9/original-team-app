@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="intro">日本絶景ダイアリーへようこそ！</div>
+    <div class="intro">日本絶景ダイアリー</div>
     <img src="../assets/ロゴ.png" style="margin-bottom: 50px" />
     <div>
       <button v-on:click="login" class="googlelogin">
@@ -44,8 +44,23 @@ export default {
 }
 
 .intro {
-  font-size: 50px;
-  padding: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 3vw;
+  padding-top: 30px;
+  width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: flowing-anim 8s forwards linear;
+}
+
+@keyframes flowing-anim {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 .googlelogin {

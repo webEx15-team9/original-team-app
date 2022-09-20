@@ -29,14 +29,14 @@
 }
 
 .header_logo {
-  width: 100px;
-  padding-left: 50px;
+  width: 5vw;
+  padding-left: 4vw;
 }
 
 .nav {
   display: flex;
-  padding-right: 15px;
-  font-size: 20px;
+  padding-right: 1vw;
+  font-size: 1vw;
 }
 .nav_link {
   margin: 0px 30px;

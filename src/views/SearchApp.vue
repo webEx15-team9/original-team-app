@@ -50,7 +50,9 @@
     </div>
   </div>
   <br />
-  <button v-on:click="searchButton">検索！</button>
+  <button v-on:click="searchButton" class="form__search-button">
+    <span>検索する！</span>
+  </button>
   <div v-for="(search, index) in forSearch" :key="index">
     <div class="el_flexItem">
       <br />
@@ -177,6 +179,48 @@ export default {
   padding: 2rem;
   text-align: left;
 }
+
+.form__search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  box-sizing: border-box;
+  background: black;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+.form__search-button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: rgb(216, 223, 223);
+  box-sizing: border-box;
+  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  box-shadow: 0px 7px 14px #cad4e2, -8px -8px 14px #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  transition-duration: 0.2s;
+}
+
+.form__search-button:hover span {
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 6px #cad4e2, -4px -4px 6px #fff;
+}
+
 .el_flexItem {
   /* padding: 2rem; */
   display: flex;
