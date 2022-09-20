@@ -158,43 +158,22 @@
     </div>
     <br />
     <div class="form__buttons">
-      <button v-on:click="postTweet" class="form__submit-button">
-        <span> 投稿する！</span>
+
+      <button v-on:click="postTweet" class="form__submit-button" v-if="url">
+        投稿する
+      </button>
+      <button
+        v-on:click="postTweet"
+        class="form__submit-button"
+        v-else
+        disabled
+      >
+        投稿する
+
       </button>
     </div>
   </div>
 
-  <div class="bl_flexContainer">
-    <div v-for="tweet in tweets" :key="tweet.id">
-      <div class="el_flexItem">
-        <br />
-        <div class="first-block">
-          <div class="info">名前：{{ tweet.text }}<br /></div>
-          <div class="info">撮影日時：{{ tweet.textDate }}</div>
-
-          <div class="info">地方名：{{ tweet.selectRegion }}</div>
-
-          <div class="info">都道府県名：{{ tweet.selectPrefecture }}</div>
-
-          <div class="info">交通手段：{{ tweet.selectTransport }}</div>
-
-          <div class="info">
-            世界遺産に登録されていますか？：{{ tweet.selectWorldHeritage }}
-          </div>
-
-          <div class="info">季節：{{ tweet.selectSeason }}</div>
-          <div class="info">予算：{{ tweet.selectBudget }}</div>
-          <div class="info">滞在期間：{{ tweet.selectStay }}</div>
-        </div>
-        <div class="second-block">
-          <div class="second-info">写真↓</div>
-          <br />
-          <div class="second-info">感想：<br />{{ tweet.textPost }}</div>
-        </div>
-      </div>
-      <button v-on:click="deletePost(tweet)">↑削除</button>
-    </div>
-  </div>
   <Footer></Footer>
 </template>
 
@@ -258,6 +237,7 @@ export default {
           // Handle unsuccessful uploads
           console.log(error)
         },
+
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL)
@@ -287,12 +267,7 @@ export default {
         }
       )
     },
-    deletePost() {
-      {
-        alert("本当に削除してもよろしいですか？")
-      }
-      this.tweets.splice(0, 1)
-    },
+
     uploadFile() {
       const file = this.$refs.preview.files[0]
       this.url = URL.createObjectURL(file)
@@ -353,6 +328,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
+  height: 850px;
 }
 .form__wrapper {
   padding: 2rem;
@@ -360,7 +336,7 @@ export default {
 }
 .form__textarea {
   width: 570px;
-  height: calc(1.3rem * 3 + 1rem * 2);
+  height: calc(1.3rem * 3 + 1rem * 5);
   padding: 0.5rem;
   line-height: 1.3rem;
   border-radius: 5px;
@@ -375,6 +351,7 @@ export default {
   text-align: center;
 }
 .form__submit-button {
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -454,14 +431,10 @@ export default {
 .second-info {
   top: 5px;
   margin-left: 300px;
+
   margin: 20px;
-  text-align: left;
 }
-.second-block {
-  padding: 20px;
-  text-align: right;
-  justify-content: right;
-}
+
 .picture {
   height: 300px;
   width: 300px;

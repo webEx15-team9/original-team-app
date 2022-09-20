@@ -50,6 +50,7 @@
     </div>
   </div>
   <br />
+
   <button v-on:click="searchButton" class="form__search-button">
     <span>検索する！</span>
   </button>
@@ -60,25 +61,29 @@
         <div class="info">名前：{{ search.text }}<br /></div>
         <div class="info">撮影日時：{{ search.textDate }}</div>
 
-        <div class="info">地方名：{{ search.selectRegion }}</div>
 
-        <div class="info">都道府県名：{{ search.selectPrefecture }}</div>
+          <div class="info">地方名：{{ search.selectRegion }}</div>
 
-        <div class="info">交通手段：{{ search.selectTransport }}</div>
+          <div class="info">都道府県名：{{ search.selectPrefecture }}</div>
 
-        <div class="info">
-          世界遺産に登録されていますか？：{{ search.selectWorldHeritage }}
+          <div class="info">交通手段：{{ search.selectTransport }}</div>
+
+          <div class="info">
+            世界遺産に登録されていますか？：{{ search.selectWorldHeritage }}
+          </div>
+
+          <div class="info">季節：{{ search.selectSeason }}</div>
+          <div class="info">予算：{{ search.selectBudget }}</div>
+          <div class="info">滞在期間：{{ search.selectStay }}</div>
         </div>
-
-        <div class="info">季節：{{ search.selectSeason }}</div>
-        <div class="info">予算：{{ search.selectBudget }}</div>
-        <div class="info">滞在期間：{{ search.selectStay }}</div>
-      </div>
-      <div class="second-block">
-        <div class="second-info">写真↓</div>
-        <div class="picture"><img v-bind:src="search.selectUrl" /></div>
-        <br />
-        <div class="second-info">感想：<br />{{ search.textPost }}</div>
+        <div class="second-block">
+          <div class="second-info">感想：<br />{{ search.textPost }}</div>
+        </div>
+        <div class="third-block">
+          <div class="third-info">
+            <img v-bind:src="search.selectUrl" class="picture" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -180,6 +185,7 @@ export default {
   text-align: left;
 }
 
+
 .form__search-button {
   display: flex;
   justify-content: center;
@@ -221,17 +227,21 @@ export default {
   box-shadow: 0 0 6px #cad4e2, -4px -4px 6px #fff;
 }
 
+
 .el_flexItem {
-  /* padding: 2rem; */
+  padding: 10px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   position: relative;
-  margin: 100px;
+  margin: 0 auto;
+  /* margin: 200px; */
   text-align: center;
-  width: 1100px;
+  width: 1200px;
   height: 380px;
+
   margin-left: auto;
   margin-right: auto;
+
   margin-bottom: 30px;
   background-color: rgb(169, 233, 163);
   list-style: none;
@@ -248,6 +258,7 @@ export default {
   padding: 20px;
 }
 .second-block {
+  width: 150px;
   padding: 20px;
   text-align: right;
   justify-content: right;
@@ -262,5 +273,18 @@ export default {
   margin-left: 300px;
   margin: 20px;
   text-align: left;
+}
+.third-block {
+  text-align: right;
+  justify-content: right;
+  padding: 20px;
+}
+.third-info {
+  padding-left: 100px;
+  padding-top: 20px;
+}
+.picture {
+  height: 300px;
+  width: 300px;
 }
 </style>
