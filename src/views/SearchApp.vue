@@ -1,6 +1,5 @@
 <template>
   <Header></Header>
-  <div>検索ページ</div>
   <div class="search_home__wrapper">
     <div class="search_form__wrapper">
       <p>１．地方名</p>
@@ -51,16 +50,17 @@
     </div>
   </div>
   <br />
-  <button v-on:click="searchButton">検索！</button>
-  <br />
-  <br />
-  <div class="bl_flexContainer">
-    <div v-for="(search, index) in forSearch" :key="index">
-      <div class="el_flexItem">
-        <br />
-        <div class="first-block">
-          <div class="info">名前：{{ search.text }}<br /></div>
-          <div class="info">撮影日時：{{ search.textDate }}</div>
+
+  <button v-on:click="searchButton" class="form__search-button">
+    <span>検索する！</span>
+  </button>
+  <div v-for="(search, index) in forSearch" :key="index">
+    <div class="el_flexItem">
+      <br />
+      <div class="first-block">
+        <div class="info">名前：{{ search.text }}<br /></div>
+        <div class="info">撮影日時：{{ search.textDate }}</div>
+
 
           <div class="info">地方名：{{ search.selectRegion }}</div>
 
@@ -95,6 +95,7 @@ import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
 import { getDocs, collection } from "firebase/firestore"
 import { db } from "/firebase"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 
 export default {
   components: {
@@ -144,21 +145,33 @@ export default {
   },
 
   created() {
-    getDocs(collection(db, "tweets")).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        this.forSearch.push({
-          id: doc.id,
-          ...doc.data(),
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user)
+      } else {
+        console.log("notuser")
+        window.alert("ログインしてください")
+        this.$router.push("/")
+      }
+    }),
+      getDocs(collection(db, "tweets")).then((snapshot) => {
+        snapshot.forEach((doc) => {
+          this.forSearch.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
       })
-    })
   },
 }
 </script>
 
 <style>
 .search_home__wrapper {
-  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
   max-width: 1200px;
   background-color: rgb(245, 249, 249);
   display: flex;
@@ -172,13 +185,49 @@ export default {
   text-align: left;
 }
 
-.bl_flexContainer {
+
+.form__search-button {
+  display: flex;
   justify-content: center;
-  text-align: center;
   align-items: center;
+  width: 300px;
+  height: 50px;
+  box-sizing: border-box;
+  background: black;
+  position: relative;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer;
 }
+
+.form__search-button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: rgb(216, 223, 223);
+  box-sizing: border-box;
+  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  box-shadow: 0px 7px 14px #cad4e2, -8px -8px 14px #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  transition-duration: 0.2s;
+}
+
+.form__search-button:hover span {
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 6px #cad4e2, -4px -4px 6px #fff;
+}
+
+
 .el_flexItem {
   padding: 10px;
   display: flex;
@@ -189,7 +238,10 @@ export default {
   text-align: center;
   width: 1200px;
   height: 380px;
-  margin: 120px;
+
+  margin-left: auto;
+  margin-right: auto;
+
   margin-bottom: 30px;
   background-color: rgb(169, 233, 163);
   list-style: none;

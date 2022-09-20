@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="title">タイトル</div>
+    <div class="title">日本絶景ダイアリー</div>
   </footer>
 </template>
 
@@ -13,6 +13,6 @@
 .title {
   display: inline-flex;
   justify-content: center;
-  font-size: 30px;
+  font-size: 20px;
 }
 </style>

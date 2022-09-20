@@ -1,7 +1,6 @@
 <template>
   <Header></Header>
   <div class="app">
-    <h2>投稿ページ</h2>
     <div class="home__wrapper">
       <div class="form__wrapper">
         <p>１，場所の名前</p>
@@ -159,6 +158,7 @@
     </div>
     <br />
     <div class="form__buttons">
+
       <button v-on:click="postTweet" class="form__submit-button" v-if="url">
         投稿する
       </button>
@@ -169,6 +169,7 @@
         disabled
       >
         投稿する
+
       </button>
     </div>
   </div>
@@ -187,6 +188,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 // import { deletePost } from "./views/PostApp.vue"
 export default {
   components: {
@@ -215,9 +217,7 @@ export default {
       const file = this.$refs.preview.files[0]
       const storage = getStorage()
       const storageRef = ref(storage, file.name)
-
       const uploadTask = uploadBytesResumable(storageRef, file)
-
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -273,18 +273,26 @@ export default {
       this.url = URL.createObjectURL(file)
     },
   },
-
   created() {
-    getDocs(collection(db, "tweets")).then((snapshot) => {
-      snapshot.forEach((doc) => {
-        this.tweets.push({
-          id: doc.id,
-          ...doc.data(),
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user)
+      } else {
+        console.log("notuser")
+        window.alert("ログインしてください")
+        this.$router.push("/")
+      }
+    }),
+      getDocs(collection(db, "tweets")).then((snapshot) => {
+        snapshot.forEach((doc) => {
+          this.tweets.push({
+            id: doc.id,
+            ...doc.data(),
+          })
         })
       })
-    })
   },
-
   //   })
 }
 </script>
@@ -302,19 +310,19 @@ export default {
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
 <style scoped>
 .home__wrapper {
-  margin: 0 auto;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1200px;
   background-color: rgb(245, 249, 249);
   display: flex;
@@ -343,13 +351,87 @@ export default {
   text-align: center;
 }
 .form__submit-button {
-  width: 140px;
-  height: 70px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  box-sizing: border-box;
+  background: black;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+}
+
+.form__submit-button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: rgb(216, 223, 223);
+  box-sizing: border-box;
+  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  box-shadow: 0px 7px 14px #cad4e2, -8px -8px 14px #fff;
+  border-radius: 10px;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  transition-duration: 0.2s;
+}
+
+.form__submit-button:hover span {
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 6px #cad4e2, -4px -4px 6px #fff;
+}
+
+.bl_flexContainer {
+  justify-content: center;
   text-align: center;
+  margin-bottom: 50px;
+}
+
+.el_flexItem {
+  /* padding: 2rem; */
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  text-align: center;
+  width: 1100px;
+  height: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  background-color: rgb(169, 233, 163);
+  list-style: none;
+  border-radius: 2%;
+  border-style: solid;
+  border-color: green;
+  font-style: italic;
   font-weight: 600;
-  border-radius: 50%;
-  background-color: rgb(247, 250, 247);
-  font-size: large;
+}
+.first-block {
+  display: table-column;
+  text-align: left;
+  justify-content: left;
+  padding: 20px;
+}
+.info {
+  top: 5px;
+  left: 200px;
+  margin: 15px;
+}
+.second-info {
+  top: 5px;
+  margin-left: 300px;
+
   margin: 20px;
 }
 
